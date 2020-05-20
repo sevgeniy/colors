@@ -5,15 +5,19 @@ import ColorList from './ColorList';
 import { createStore, combineReducers } from 'redux';
 import ColorsReducer from './reducers/ColorsReducer';
 import SortReducer from './reducers/SortReducer';
-import initialState from './data';
-import ColorsState from './models/ColorsState';
 
 function App() {
+    const initialState: { colors: Color[]; sortBy: string } = {
+        colors: [new Color('red', 'red', 2), new Color('blue', 'blue', 4)],
+        sortBy: 'SORT_BY_NAME',
+    };
+
     const store = createStore(
         combineReducers({
             colors: ColorsReducer,
             sortBy: SortReducer,
-        })
+        }),
+        initialState
     );
 
     const [colors, setColors] = useState<Array<Color>>([]);
@@ -40,7 +44,7 @@ function App() {
         <div>
             <AddColorForm onNewColor={addColorHandler} />
             <ColorList
-                colors={colors}
+                colors={store.getState().colors}
                 onRateColor={rateColorHandler}
                 onRemoveColor={removeColorHandler}
             />
