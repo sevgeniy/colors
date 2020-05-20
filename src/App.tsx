@@ -1,5 +1,6 @@
 import React from 'react';
 import AddColorForm from './AddColorForm';
+import StarRating from './StarRating';
 
 function App() {
     const onNewColor = (
@@ -10,7 +11,12 @@ function App() {
         console.log(`color: ${color}.`);
     };
 
-    return <AddColorForm onNewColor={onNewColor} />;
+    return (
+        <div>
+            <StarRating />
+            <AddColorForm onNewColor={onNewColor} />
+        </div>
+    );
 }
 
 export default App;
