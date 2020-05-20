@@ -10,10 +10,28 @@ function App() {
         setColors([...colors, new Color(title, value)]);
     };
 
+    const rateColorHandler = (id: string, rating: number): void => {
+        setColors(
+            colors.map((color) =>
+                color.Id === id
+                    ? new Color(color.Title, color.Value, rating, color.Id)
+                    : color
+            )
+        );
+    };
+
+    const removeColorHandler = (id: string): void => {
+        setColors(colors.filter((color) => color.Id !== id));
+    };
+
     return (
         <div>
             <AddColorForm onNewColor={addColorHandler} />
-            <ColorList colors={colors} />
+            <ColorList
+                colors={colors}
+                onRateColor={rateColorHandler}
+                onRemoveColor={removeColorHandler}
+            />
         </div>
     );
 }

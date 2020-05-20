@@ -6,16 +6,19 @@ const DefaultTotalStars = 5;
 interface IStarRatingProps {
     totalStars?: number;
     starsSelected?: number;
+    onRate: (rating: number) => void;
 }
 
 const StarRating: FunctionComponent<IStarRatingProps> = ({
     totalStars = DefaultTotalStars,
+    onRate,
     starsSelected: initialStarsSelected = 0,
 }) => {
     const [starsSelected, setStarsSelected] = useState(initialStarsSelected);
 
     const handleStarClick = (stars: number) => {
         setStarsSelected(stars);
+        onRate(stars);
     };
 
     return (

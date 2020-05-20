@@ -6,8 +6,8 @@ class Color {
     private value: string;
     private rating: number = 0;
 
-    constructor(title: string, value: string, rating?: number) {
-        this.id = uuidv4();
+    constructor(title: string, value: string, rating?: number, id?: string) {
+        this.id = id === undefined ? uuidv4() : id;
         this.title = title;
         this.value = value;
         if (rating !== undefined) this.rating = rating;
