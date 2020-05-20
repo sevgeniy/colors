@@ -1,0 +1,14 @@
+.color {
+    width: 200px;
+    font-family: Roboto sans-serif;
+    font-size: 16px;
+    line-height: 18px;
+    border: 1px solid grey;
+}
+
+.color__title {
+}
+
+.color__value {
+    height: 40px;
+}

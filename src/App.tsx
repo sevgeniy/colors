@@ -1,20 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import AddColorForm from './AddColorForm';
-import StarRating from './StarRating';
+import Color from './models/Color';
+import ColorList from './ColorList';
 
 function App() {
-    const onNewColor = (
-        title: string | undefined,
-        color: string | undefined
-    ): void => {
-        console.log(`title: ${title}.`);
-        console.log(`color: ${color}.`);
+    const [colors, setColors] = useState<Array<Color>>([]);
+
+    const addColorHandler = (title: string, value: string): void => {
+        setColors([...colors, new Color(title, value)]);
     };
 
     return (
         <div>
-            <StarRating />
-            <AddColorForm onNewColor={onNewColor} />
+            <AddColorForm onNewColor={addColorHandler} />
+            <ColorList colors={colors} />
         </div>
     );
 }

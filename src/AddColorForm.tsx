@@ -3,11 +3,10 @@ import React, {
     SyntheticEvent,
     FunctionComponent,
     useRef,
-    MutableRefObject,
 } from 'react';
 
 interface IAddColorFormProps {
-    onNewColor: (title: string | undefined, color: string | undefined) => void;
+    onNewColor: (title: string, color: string) => void;
 }
 
 const AddColorForm: FunctionComponent<IAddColorFormProps> = ({
@@ -17,11 +16,16 @@ const AddColorForm: FunctionComponent<IAddColorFormProps> = ({
         e: SyntheticEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
-        onNewColor(title.current?.value, color.current?.value);
+
+        if (!title.current || !value.current) return;
+
+        onNewColor(title.current.value, value.current.value);
+        title.current.value = '';
+        value.current.value = '';
     };
 
-    const title: MutableRefObject<HTMLInputElement | null> = useRef(null);
-    const color: MutableRefObject<HTMLInputElement | null> = useRef(null);
+    const title = useRef<HTMLInputElement>(null);
+    const value = useRef<HTMLInputElement>(null);
 
     return (
         <form onSubmit={handleSubmit}>
@@ -31,7 +35,7 @@ const AddColorForm: FunctionComponent<IAddColorFormProps> = ({
                 placeholder="color title..."
                 required
             />
-            <input ref={color} type="color" required />
+            <input ref={value} type="color" required />
             <button type="submit">ADD</button>
         </form>
     );
