@@ -1,7 +1,8 @@
-import React from "react";
+import React from 'react';
+import AddColorForm from './AddColorForm';
 
 function App() {
-  return <div>Hello colors</div>;
+    return <AddColorForm />;
 }
 
 export default App;
