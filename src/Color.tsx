@@ -7,8 +7,8 @@ interface IColorProps {
     title: string;
     value: string;
     rating: number;
-    onRate: (id: string, rating: number) => void;
-    onRemove: (id: string) => void;
+    onRate: (rating: number) => void;
+    onRemove: () => void;
 }
 
 const Color: FunctionComponent<IColorProps> = ({
@@ -19,8 +19,8 @@ const Color: FunctionComponent<IColorProps> = ({
     onRate,
     onRemove,
 }): JSX.Element => {
-    const handleRateColor = (rating: number): void => onRate(id, rating);
-    const handleRemoveColor = (e: SyntheticEvent): void => onRemove(id);
+    const handleRateColor = (rating: number): void => onRate(rating);
+    const handleRemoveColor = (e: SyntheticEvent): void => onRemove();
 
     return (
         <div className="color">

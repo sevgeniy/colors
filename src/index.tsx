@@ -8,6 +8,7 @@ import SortReducer from './reducers/SortReducer';
 import ColorsState from './models/ColorsState';
 import IAction from './IAction';
 import IAppState from './IAppState';
+import AppContext from './AppContext';
 
 const APP_KEY: string = 'colors-app-state';
 
@@ -21,8 +22,8 @@ const store: Store<IAppState, IAction> = createStore(
         sortBy: SortReducer,
     }),
     {
-        colors: [],
-        sortBy: '',
+        colors: initialState.colors,
+        sortBy: initialState.sortBy,
     }
 );
 
@@ -33,7 +34,9 @@ store.subscribe(() => {
 const render = () =>
     ReactDOM.render(
         <React.StrictMode>
-            <App store={store} />
+            <AppContext.Provider value={store}>
+                <App />
+            </AppContext.Provider>
         </React.StrictMode>,
         document.getElementById('root')
     );

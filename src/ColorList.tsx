@@ -1,21 +1,16 @@
-import React, { FunctionComponent } from 'react';
+import React, { useContext, FunctionComponent } from 'react';
 import Color from './Color';
 import ColorModel from './models/Color';
 import { Store } from 'redux';
 import IAppState from './IAppState';
 import IAction from './IAction';
+import AppContext from './AppContext';
+import { removeColor, rateColor } from './actionCreators/colorActions';
 
-interface IColorListProps {
-    onRateColor: (id: string, rating: number) => void;
-    onRemoveColor: (id: string) => void;
-    store: Store<IAppState, IAction>;
-}
+interface IColorListProps {}
 
-const ColorList: FunctionComponent<IColorListProps> = ({
-    store,
-    onRateColor,
-    onRemoveColor,
-}) => {
+const ColorList: FunctionComponent<IColorListProps> = ({}) => {
+    const store = useContext(AppContext) as Store<IAppState, IAction>;
     const { colors } = store.getState();
 
     return (
@@ -28,8 +23,10 @@ const ColorList: FunctionComponent<IColorListProps> = ({
                         title={color.title}
                         value={color.value}
                         rating={color.rating}
-                        onRate={onRateColor}
-                        onRemove={onRemoveColor}
+                        onRate={(rating: number) =>
+                            store.dispatch(rateColor(color.id, rating))
+                        }
+                        onRemove={() => store.dispatch(removeColor(color.id))}
                     />
                 </div>
             ))}

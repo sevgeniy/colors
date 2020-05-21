@@ -1,24 +1,21 @@
-import React, { FunctionComponent } from 'react';
+import React, { FunctionComponent, useContext } from 'react';
 import AddColorForm from './AddColorForm';
 import ColorList from './ColorList';
-import Color from './models/Color';
-import { createStore, combineReducers, Store } from 'redux';
-import ColorsReducer from './reducers/ColorsReducer';
-import SortReducer from './reducers/SortReducer';
+import { Store } from 'redux';
 import {
     addColor,
     rateColor,
     removeColor,
 } from './actionCreators/colorActions';
-import ColorsState from './models/ColorsState';
 import IAction from './IAction';
 import IAppState from './IAppState';
+import AppContext from './AppContext';
 
-interface IAppProps {
-    store: Store<IAppState, IAction>;
-}
+interface IAppProps {}
 
-const App: FunctionComponent<IAppProps> = ({ store }) => {
+const App: FunctionComponent<IAppProps> = () => {
+    const store = useContext(AppContext) as Store<IAppState, IAction>;
+
     const addColorHandler = (title: string, value: string): void => {
         store.dispatch(addColor(title, value));
     };
@@ -33,12 +30,8 @@ const App: FunctionComponent<IAppProps> = ({ store }) => {
 
     return (
         <div>
-            <AddColorForm store={store} onNewColor={addColorHandler} />
-            <ColorList
-                store={store}
-                onRateColor={rateColorHandler}
-                onRemoveColor={removeColorHandler}
-            />
+            <AddColorForm />
+            <ColorList />
         </div>
     );
 };
