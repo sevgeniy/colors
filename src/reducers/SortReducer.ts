@@ -5,6 +5,8 @@ const SortReducer = (
     state: string = 'SORT_BY_NAME',
     action: IAction
 ): string => {
+    console.log('action', action);
+
     const { type, payload } = action;
 
     switch (type) {
