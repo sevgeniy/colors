@@ -1,20 +1,20 @@
 import ColorModel from '../models/Color';
 import IAction from '../IAction';
+import Actions from '../Actions';
 
 const ColorReducer = (
     state: ColorModel | {} = {},
     action: IAction
 ): ColorModel => {
     const { payload, type } = action;
-    const { Title, Value, Rating, Id } = payload.color;
+    const { title, value, rating, id } = payload.color;
 
     switch (type) {
-        case 'ADD_COLOR':
-            return new ColorModel(Title, Value, Rating);
-        case 'RATE_COLOR':
-            return (state as ColorModel).Id === Id
-                ? new ColorModel(Title, Value, Rating, Id)
-                : (state as ColorModel);
+        case Actions.ADD_COLOR:
+            return new ColorModel(title, value, rating);
+        case Actions.RATE_COLOR:
+            let s = state as ColorModel;
+            return new ColorModel(s.title, s.value, rating, id);
         default: {
             return state as ColorModel;
         }

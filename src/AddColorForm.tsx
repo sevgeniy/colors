@@ -4,9 +4,13 @@ import React, {
     FunctionComponent,
     useRef,
 } from 'react';
+import { Store } from 'redux';
+import IAppState from './IAppState';
+import IAction from './IAction';
 
 interface IAddColorFormProps {
     onNewColor: (title: string, color: string) => void;
+    store: Store<IAppState, IAction>;
 }
 
 const AddColorForm: FunctionComponent<IAddColorFormProps> = ({

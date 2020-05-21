@@ -1,5 +1,6 @@
 import ColorModel from '../models/Color';
 import IAction from '../IAction';
+import Actions from '../Actions';
 import ColorReducer from './ColorReducer';
 
 const ColorsReducer = (
@@ -9,12 +10,14 @@ const ColorsReducer = (
     const { type, payload } = action;
 
     switch (type) {
-        case 'ADD_COLOR':
+        case Actions.ADD_COLOR:
             return [...state, ColorReducer({}, action)];
-        case 'RATE_COLOR':
-            return state.map((c) => ColorReducer(c, action));
-        case 'REMOVE_COLOR':
-            return state.filter((color) => color.Id !== payload.color.Id);
+        case Actions.RATE_COLOR:
+            return state.map((c) =>
+                c.id === action.payload.color.id ? ColorReducer(c, action) : c
+            );
+        case Actions.REMOVE_COLOR:
+            return state.filter((color) => color.id !== payload.color.id);
         default:
             return state;
     }

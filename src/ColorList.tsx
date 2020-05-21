@@ -1,30 +1,37 @@
 import React, { FunctionComponent } from 'react';
 import Color from './Color';
 import ColorModel from './models/Color';
+import { Store } from 'redux';
+import IAppState from './IAppState';
+import IAction from './IAction';
 
 interface IColorListProps {
-    colors: ColorModel[];
     onRateColor: (id: string, rating: number) => void;
     onRemoveColor: (id: string) => void;
+    store: Store<IAppState, IAction>;
 }
 
 const ColorList: FunctionComponent<IColorListProps> = ({
-    colors,
+    store,
     onRateColor,
     onRemoveColor,
 }) => {
+    const { colors } = store.getState();
+
     return (
         <div>
-            {colors.map((color) => (
-                <Color
-                    key={color.Id}
-                    id={color.Id}
-                    title={color.Title}
-                    value={color.Value}
-                    rating={color.Rating}
-                    onRate={onRateColor}
-                    onRemove={onRemoveColor}
-                />
+            {colors.map((color: ColorModel, index: number) => (
+                <div key={index}>
+                    <Color
+                        key={color.id}
+                        id={color.id}
+                        title={color.title}
+                        value={color.value}
+                        rating={color.rating}
+                        onRate={onRateColor}
+                        onRemove={onRemoveColor}
+                    />
+                </div>
             ))}
         </div>
     );

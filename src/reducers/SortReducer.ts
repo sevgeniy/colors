@@ -1,4 +1,5 @@
 import IAction from '../IAction';
+import Actions from '../Actions';
 
 const SortReducer = (
     state: string = 'SORT_BY_NAME',
@@ -7,7 +8,7 @@ const SortReducer = (
     const { type, payload } = action;
 
     switch (type) {
-        case 'SORT_COLORS':
+        case Actions.SORT_COLORS:
             return payload.sortBy;
         default: {
             return state;

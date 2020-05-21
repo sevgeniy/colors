@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React from 'react';
 import AddColorForm from './AddColorForm';
-import Color from './models/Color';
 import ColorList from './ColorList';
-import { createStore, combineReducers } from 'redux';
+import { createStore, combineReducers, Store } from 'redux';
 import ColorsReducer from './reducers/ColorsReducer';
 import SortReducer from './reducers/SortReducer';
+import {
+    addColor,
+    rateColor,
+    removeColor,
+} from './actionCreators/colorActions';
+import ColorsState from './models/ColorsState';
+import IAction from './IAction';
+import IAppState from './IAppState';
 
 function App() {
-    const initialState: { colors: Color[]; sortBy: string } = {
-        colors: [new Color('red', 'red', 2), new Color('blue', 'blue', 4)],
-        sortBy: 'SORT_BY_NAME',
-    };
+    const APP_KEY: string = 'colors-app-state';
 
-    const store = createStore(
+    const initialState: IAppState = localStorage[APP_KEY]
+        ? ColorsState.fromJSON(localStorage[APP_KEY])
+        : { colors: [], sortBy: '' };
+
+    const store: Store<IAppState, IAction> = createStore(
         combineReducers({
             colors: ColorsReducer,
             sortBy: SortReducer,
@@ -20,31 +28,29 @@ function App() {
         initialState
     );
 
-    const [colors, setColors] = useState<Array<Color>>([]);
+    console.log(store.getState());
+
+    store.subscribe(() => {
+        localStorage[APP_KEY] = JSON.stringify(store.getState());
+    });
 
     const addColorHandler = (title: string, value: string): void => {
-        setColors([...colors, new Color(title, value)]);
+        store.dispatch(addColor(title, value));
     };
 
     const rateColorHandler = (id: string, rating: number): void => {
-        setColors(
-            colors.map((color) =>
-                color.Id === id
-                    ? new Color(color.Title, color.Value, rating, color.Id)
-                    : color
-            )
-        );
+        store.dispatch(rateColor(id, rating));
     };
 
     const removeColorHandler = (id: string): void => {
-        setColors(colors.filter((color) => color.Id !== id));
+        store.dispatch(removeColor(id));
     };
 
     return (
         <div>
-            <AddColorForm onNewColor={addColorHandler} />
+            <AddColorForm store={store} onNewColor={addColorHandler} />
             <ColorList
-                colors={store.getState().colors}
+                store={store}
                 onRateColor={rateColorHandler}
                 onRemoveColor={removeColorHandler}
             />
