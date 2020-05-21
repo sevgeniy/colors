@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import AddColorForm from './AddColorForm';
 import ColorList from './ColorList';
+import Color from './models/Color';
 import { createStore, combineReducers, Store } from 'redux';
 import ColorsReducer from './reducers/ColorsReducer';
 import SortReducer from './reducers/SortReducer';
@@ -13,27 +14,11 @@ import ColorsState from './models/ColorsState';
 import IAction from './IAction';
 import IAppState from './IAppState';
 
-function App() {
-    const APP_KEY: string = 'colors-app-state';
+interface IAppProps {
+    store: Store<IAppState, IAction>;
+}
 
-    const initialState: IAppState = localStorage[APP_KEY]
-        ? ColorsState.fromJSON(localStorage[APP_KEY])
-        : { colors: [], sortBy: '' };
-
-    const store: Store<IAppState, IAction> = createStore(
-        combineReducers({
-            colors: ColorsReducer,
-            sortBy: SortReducer,
-        }),
-        initialState
-    );
-
-    console.log(store.getState());
-
-    store.subscribe(() => {
-        localStorage[APP_KEY] = JSON.stringify(store.getState());
-    });
-
+const App: FunctionComponent<IAppProps> = ({ store }) => {
     const addColorHandler = (title: string, value: string): void => {
         store.dispatch(addColor(title, value));
     };
@@ -56,6 +41,6 @@ function App() {
             />
         </div>
     );
-}
+};
 
 export default App;

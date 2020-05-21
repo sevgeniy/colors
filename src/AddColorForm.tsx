@@ -7,6 +7,7 @@ import React, {
 import { Store } from 'redux';
 import IAppState from './IAppState';
 import IAction from './IAction';
+import { addColor } from './actionCreators/colorActions';
 
 interface IAddColorFormProps {
     onNewColor: (title: string, color: string) => void;
@@ -15,6 +16,7 @@ interface IAddColorFormProps {
 
 const AddColorForm: FunctionComponent<IAddColorFormProps> = ({
     onNewColor,
+    store,
 }) => {
     const handleSubmit: ReactEventHandler = (
         e: SyntheticEvent<HTMLFormElement>
@@ -24,6 +26,8 @@ const AddColorForm: FunctionComponent<IAddColorFormProps> = ({
         if (!title.current || !value.current) return;
 
         onNewColor(title.current.value, value.current.value);
+        // store.dispatch(addColor(title.current.value, value.current.value));
+
         title.current.value = '';
         value.current.value = '';
     };
