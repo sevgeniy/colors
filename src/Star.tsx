@@ -5,13 +5,11 @@ interface IStarProps {
     onClick: ReactEventHandler;
 }
 
-const Star: FunctionComponent<IStarProps> = ({ isSelected, onClick }) => {
-    return (
-        <div
-            className={isSelected ? 'star star--selected' : 'star'}
-            onClick={onClick}
-        ></div>
-    );
-};
+const Star: FunctionComponent<IStarProps> = ({ isSelected, onClick }) => (
+    <div
+        className={isSelected ? 'star star--selected' : 'star'}
+        onClick={onClick}
+    ></div>
+);
 
 export default Star;
