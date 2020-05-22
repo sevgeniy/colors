@@ -55,12 +55,12 @@ describe('color Reducer', () => {
     ) {
         const { title, value, rating, id } = actualColor;
 
-        expectedTitle !== undefined && expect(title).toEqual(expectedTitle);
-        expectedValue !== undefined && expect(value).toEqual(expectedValue);
-        expectedRating !== undefined && expect(rating).toEqual(expectedRating);
+        expectedTitle !== undefined && expect(title).toBe(expectedTitle);
+        expectedValue !== undefined && expect(value).toBe(expectedValue);
+        expectedRating !== undefined && expect(rating).toBe(expectedRating);
 
         expectedId !== undefined
-            ? expect(id).toEqual(expectedId)
+            ? expect(id).toBe(expectedId)
             : expect(id).toHaveLength(ID_LENGTH);
     }
 });

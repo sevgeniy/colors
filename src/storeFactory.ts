@@ -2,6 +2,7 @@ import { combineReducers, createStore, applyMiddleware } from 'redux';
 import ColorsReducer from './reducers/ColorsReducer';
 import SortReducer from './reducers/SortReducer';
 import ColorsState from './models/ColorsState';
+import IAppState from './IAppState';
 
 const APP_KEY: string = 'colors-app-state';
 
@@ -26,13 +27,21 @@ const defaultState = localStorage[APP_KEY]
     ? ColorsState.fromJSON(localStorage[APP_KEY])
     : { colors: [], sortBy: '' };
 
-const storeFactory = (initialState = { colors: [], sortBy: '' }) =>
-    applyMiddleware(logger, saver)(createStore)(
+const storeFactory = (
+    initialState: IAppState = {
+        colors: defaultState.colors,
+        sortBy: defaultState.sortBy,
+    }
+) => {
+    console.log('initialState', initialState);
+
+    return applyMiddleware(logger, saver)(createStore)(
         combineReducers({
             colors: ColorsReducer,
             sortBy: SortReducer,
         }),
-        { colors: defaultState.colors, sortBy: defaultState.sortBy }
+        initialState
     );
+};
 
 export default storeFactory;

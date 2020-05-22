@@ -5,7 +5,7 @@ import './index.css';
 import AppContext from './AppContext';
 import storeFactory from './storeFactory';
 
-const store = storeFactory({ colors: [], sortBy: '' });
+const store = storeFactory();
 
 const render = () =>
     ReactDOM.render(
