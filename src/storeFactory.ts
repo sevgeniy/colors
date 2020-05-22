@@ -1,4 +1,4 @@
-import { combineReducers, createStore, applyMiddleware, Store } from 'redux';
+import { combineReducers, createStore, applyMiddleware } from 'redux';
 import ColorsReducer from './reducers/ColorsReducer';
 import SortReducer from './reducers/SortReducer';
 import ColorsState from './models/ColorsState';
@@ -8,12 +8,10 @@ const APP_KEY: string = 'colors-app-state';
 const logger = (store: any) => (next: (action: any) => any) => (
     action: any
 ) => {
-    let result;
-
     console.groupCollapsed('dispatching', action.type);
     console.log('prev state', store.getState());
     console.log('action', action);
-    result = next(action);
+    next(action);
     console.log('next state', store.getState());
     console.groupEnd();
 };

@@ -7,21 +7,19 @@ import IAction from './IAction';
 import AppContext from './AppContext';
 import { removeColor, rateColor } from './actionCreators/colorActions';
 
-interface IColorListProps {}
-
-const ColorList: FunctionComponent<IColorListProps> = ({}) => {
+const ColorList: FunctionComponent = () => {
     const store = useContext(AppContext) as Store<IAppState, IAction>;
     const { colors, sortBy } = store.getState();
 
     const getSorted = (colors: ColorModel[], sortBy: string): ColorModel[] => {
         return colors.slice().sort((a: ColorModel, b: ColorModel): number => {
-            if (sortBy == 'name') {
+            if (sortBy === 'name') {
                 return a.title > b.title ? 1 : -1;
-            } else if (sortBy == 'value') {
+            } else if (sortBy === 'value') {
                 return a.value > b.value ? 1 : -1;
-            } else if (sortBy == 'rating') {
+            } else if (sortBy === 'rating') {
                 return a.rating > b.rating ? 1 : -1;
-            } else if (sortBy == 'id') {
+            } else if (sortBy === 'id') {
                 return a.id > b.id ? 1 : -1;
             }
 

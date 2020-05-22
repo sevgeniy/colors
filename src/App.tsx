@@ -1,4 +1,4 @@
-import React, { FunctionComponent, useContext } from 'react';
+import React, { FunctionComponent } from 'react';
 import AddColorForm from './AddColorForm';
 import ColorList from './ColorList';
 import SortMenu from './SortMenu';

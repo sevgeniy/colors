@@ -11,9 +11,7 @@ import IAction from './IAction';
 import { addColor } from './actionCreators/colorActions';
 import AppContext from './AppContext';
 
-interface IAddColorFormProps {}
-
-const AddColorForm: FunctionComponent<IAddColorFormProps> = ({}) => {
+const AddColorForm: FunctionComponent = () => {
     const store = useContext(AppContext) as Store<IAppState, IAction>;
 
     const handleSubmit: ReactEventHandler = (

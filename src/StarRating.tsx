@@ -1,4 +1,4 @@
-import React, { useState, ReactEventHandler, FunctionComponent } from 'react';
+import React, { useState, FunctionComponent } from 'react';
 import Star from './Star';
 
 const DefaultTotalStars = 5;
