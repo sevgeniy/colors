@@ -4,11 +4,14 @@ import ColorModel from './models/Color';
 import { Store } from 'redux';
 import IAppState from './IAppState';
 import IAction from './IAction';
-import AppContext from './AppContext';
+import AppContext, { useAppContext } from './AppContext';
 import { removeColor, rateColor } from './actionCreators/colorActions';
 
 const ColorList: FunctionComponent = () => {
-    const store = useContext(AppContext) as Store<IAppState, IAction>;
+    // const store = useContext(AppContext) as Store<IAppState, IAction>;
+    console.log('store from context', useAppContext());
+    const store = useAppContext() as Store<IAppState, IAction>;
+
     const { colors, sortBy } = store.getState();
 
     const getSorted = (colors: ColorModel[], sortBy: string): ColorModel[] => {
