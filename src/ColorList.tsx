@@ -14,23 +14,31 @@ const ColorList: FunctionComponent = () => {
 
     const { colors, sortBy } = store.getState();
 
-    const getSorted = (colors: ColorModel[], sortBy: string): ColorModel[] => {
-        return colors.slice().sort((a: ColorModel, b: ColorModel): number => {
-            if (sortBy === 'name') {
-                return a.title > b.title ? 1 : -1;
-            } else if (sortBy === 'value') {
-                return a.value > b.value ? 1 : -1;
-            } else if (sortBy === 'rating') {
-                return a.rating > b.rating ? 1 : -1;
-            } else if (sortBy === 'id') {
-                return a.id > b.id ? 1 : -1;
-            }
+    const getSortFunction = (sortBy: string) => (
+        a: ColorModel,
+        b: ColorModel
+    ): number => {
+        if (sortBy === 'name') {
+            return a.title > b.title ? 1 : -1;
+        } else if (sortBy === 'value') {
+            return a.value > b.value ? 1 : -1;
+        } else if (sortBy === 'rating') {
+            return a.rating > b.rating ? 1 : -1;
+        } else if (sortBy === 'id') {
+            return a.id > b.id ? 1 : -1;
+        }
 
-            return 0;
-        });
+        return 0;
     };
 
-    const sortedColors = getSorted(colors, sortBy.toLowerCase());
+    const getSortedColors = (
+        colors: ColorModel[],
+        sortBy: string
+    ): ColorModel[] => {
+        return colors.slice().sort(getSortFunction(sortBy));
+    };
+
+    const sortedColors = getSortedColors(colors, sortBy.toLowerCase());
 
     return (
         <div>

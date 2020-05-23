@@ -18,27 +18,32 @@ describe('<ColorList />', () => {
         const _rate = jest.fn();
 
         const store = {
-            colors: [
-                new Color(
-                    'red',
-                    'red',
-                    2,
-                    '9094ec55-0c1e-4b81-85d3-a5fbac0610bd'
-                ),
-                new Color(
-                    'blue',
-                    'blue',
-                    3,
-                    '6d1cd8bb-9f1c-4d81-8643-5066d108269a'
-                ),
-                new Color(
-                    'black',
-                    'black',
-                    4,
-                    '7sd4ec55-3f1c-4d81-8643-a5fbac0610bd'
-                ),
-            ],
-            sortBy: '',
+            getState: jest.fn(() => {
+                return {
+                    colors: [
+                        new Color(
+                            'red',
+                            'red',
+                            2,
+                            '9094ec55-0c1e-4b81-85d3-a5fbac0610bd'
+                        ),
+                        new Color(
+                            'blue',
+                            'blue',
+                            3,
+                            '6d1cd8bb-9f1c-4d81-8643-5066d108269a'
+                        ),
+                        new Color(
+                            'black',
+                            'black',
+                            4,
+                            '7sd4ec55-3f1c-4d81-8643-a5fbac0610bd'
+                        ),
+                    ],
+                    sortBy: '',
+                };
+            }),
+            dispatch: _rate,
         };
 
         jest.spyOn(AppContext, 'useAppContext').mockImplementation(() => store);
@@ -46,10 +51,11 @@ describe('<ColorList />', () => {
         beforeAll(() => {
             mount(<ColorList onRate={_rate} />)
                 .find('button.rate')
+                .first()
                 .simulate('click');
         });
 
-        it.skip('invokes onRate handler', () => {
+        it('invokes onRate handler', () => {
             expect(_rate).toBeCalled();
         });
     });
