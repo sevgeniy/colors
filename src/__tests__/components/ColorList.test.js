@@ -8,7 +8,7 @@ import { rateColor } from '../../actionCreators/colorActions';
 
 configure({ adapter: new Adapter() });
 
-jest.mock('../../Color', () => ({ id, rating, onRate }) => (
+jest.mock('../../Color', () => ({ onRate }) => (
     <div className="mock-color">
         <button className="rate" onClick={() => onRate(5)}></button>
     </div>
