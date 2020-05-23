@@ -4,12 +4,13 @@ import { configure, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';
 import Color from '../../models/Color';
 import * as AppContext from '../../AppContext';
+import { rateColor } from '../../actionCreators/colorActions';
 
 configure({ adapter: new Adapter() });
 
 jest.mock('../../Color', () => ({ id, rating, onRate }) => (
     <div className="mock-color">
-        <button className="rate" onClick={() => onRate(1)}></button>
+        <button className="rate" onClick={() => onRate(5)}></button>
     </div>
 ));
 
@@ -57,6 +58,12 @@ describe('<ColorList />', () => {
 
         it('invokes onRate handler', () => {
             expect(_rate).toBeCalled();
+        });
+
+        it('invokes onRate handler', () => {
+            expect(_rate).toBeCalledWith(
+                rateColor('9094ec55-0c1e-4b81-85d3-a5fbac0610bd', 5)
+            );
         });
     });
 });
